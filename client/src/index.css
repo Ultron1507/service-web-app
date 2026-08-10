@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  font-family: 'DM Sans', Inter, system-ui, sans-serif;
+  /* Derived from the Take Wind logo: sky blue, cyan, and its fresh lime arc. */
+  --primary: #168fd0;
+  --primary-hover: #0875b5;
+  --primary-active: #065b91;
+  --primary-soft: #e8f5fd;
+  --secondary: #25bdea;
+  --secondary-soft: #e8faff;
+  --accent: #b6dd38;
+  --ink: #143046;
+  --muted: #5e7485;
+  --line: #d8e5ed;
+  --surface: #fbfdff;
+  --canvas: #f4f8fc;
+  --success: #16875b;
+  --success-soft: #e7f7ee;
+  --warning: #a86e08;
+  --warning-soft: #fff6dd;
+  --danger: #bd2f32;
+  --danger-soft: #fff0f0;
+  --radius: 16px;
+  --shadow: 0 8px 24px rgba(20, 48, 70, .08);
+  color: var(--ink);
+  background: var(--canvas);
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--canvas); }
+body { min-width: 320px; margin: 0; min-height: 100vh; }
+button, input, textarea, select { max-width: 100%; }
+main, section, article, header, form, label, a, button { min-width: 0; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+img { max-width: 100%; }
+
+:where(a, button, input):focus-visible {
+  outline: 3px solid rgba(22, 143, 208, .42);
+  outline-offset: 3px;
+}
