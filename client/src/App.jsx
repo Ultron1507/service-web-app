@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import More from './pages/More'
 import ServiceCategory from './pages/ServiceCategory'
+import AdminApp from './pages/AdminApp'
 import './App.css'
 
 function AppLayout() {
@@ -32,6 +33,11 @@ function AppLayout() {
   )
 }
 
+function AppEntry() {
+  const location = useLocation()
+  return location.pathname.startsWith('/admin') ? <AdminApp /> : <AuthProvider><AppLayout /></AuthProvider>
+}
+
 export default function App() {
-  return <AuthProvider><BrowserRouter><AppLayout /></BrowserRouter></AuthProvider>
+  return <BrowserRouter><AppEntry /></BrowserRouter>
 }

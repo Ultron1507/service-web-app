@@ -1,0 +1,15 @@
+export const services = [
+  { id: 'ac-general-service', categoryId: 'ac', categoryName: 'AC', serviceName: 'AC Servicing', description: 'Cleaning and performance check for your AC' },
+  { id: 'ac-gas-refill', categoryId: 'ac', categoryName: 'AC', serviceName: 'AC Complaint', description: 'Help with cooling, leakage, noise, or other AC issues' },
+  { id: 'ac-installation', categoryId: 'ac', categoryName: 'AC', serviceName: 'AC Installation', description: 'Professional AC installation at your home' },
+  { id: 'washer-service', categoryId: 'washing', categoryName: 'Washing Machine', serviceName: 'Washing Machine Servicing', description: 'Routine maintenance and cleaning for your machine' },
+  { id: 'washer-repair', categoryId: 'washing', categoryName: 'Washing Machine', serviceName: 'Washing Machine Complaint', description: 'Help with washing, draining, or spin issues' },
+  { id: 'washer-installation', categoryId: 'washing', categoryName: 'Washing Machine', serviceName: 'Washing Machine Installation', description: 'Set up your washing machine safely' },
+  { id: 'fridge-service', categoryId: 'fridge', categoryName: 'Fridge', serviceName: 'Fridge Servicing', description: 'Cleaning and health check for your fridge' },
+  { id: 'fridge-repair', categoryId: 'fridge', categoryName: 'Fridge', serviceName: 'Fridge Complaint', description: 'Help with cooling, compressor, or noise issues' },
+  { id: 'fridge-installation', categoryId: 'fridge', categoryName: 'Fridge', serviceName: 'Fridge Installation', description: 'Careful fridge setup at your home' },
+  { id: 'cooler-service', categoryId: 'cooler', categoryName: 'Cooler', serviceName: 'Cooler Servicing', description: 'Cleaning and maintenance to keep your cooler running well' },
+  { id: 'cooler-complaint', categoryId: 'cooler', categoryName: 'Cooler', serviceName: 'Cooler Complaint', description: 'Help with cooling, fan, pump, or other cooler issues' },
+  { id: 'cooler-installation', categoryId: 'cooler', categoryName: 'Cooler', serviceName: 'Cooler Installation', description: 'Professional cooler setup at your home' },
+  { id: 'ac-yearly-rent-installation', categoryId: 'renting', categoryName: 'Renting', serviceName: 'AC Renting and Installation', description: 'Rent and install an AC for 1 year, as per Terms & Conditions' },
+]

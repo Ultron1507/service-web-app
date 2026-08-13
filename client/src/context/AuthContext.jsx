@@ -1,9 +1,7 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-import { auth } from '../firebase/firebaseConfig'
-
-const AuthContext = createContext(null)
+import { auth, hasFirebaseConfig } from '../firebase/firebaseConfig'
+import { AuthContext } from './AuthContextValue'
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -15,6 +13,11 @@ export function AuthProvider({ children }) {
 
   const login = async (phone) => {
     setLoading(true); setError('')
+    if (!hasFirebaseConfig) {
+      setError('Firebase login is not configured for this environment.')
+      setLoading(false)
+      return false
+    }
     try {
       if (!verifier.current) verifier.current = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' })
       confirmation.current = await signInWithPhoneNumber(auth, `+91${phone.replace(/\D/g, '')}`, verifier.current)
@@ -42,4 +45,3 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-export const useAuth = () => useContext(AuthContext)

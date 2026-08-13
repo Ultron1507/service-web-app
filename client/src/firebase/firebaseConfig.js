@@ -10,7 +10,12 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:1234567890:web:demo',
 }
 
+const hasFirebaseConfig = Boolean(
+  import.meta.env.VITE_FIREBASE_API_KEY &&
+  import.meta.env.VITE_FIREBASE_API_KEY !== 'demo-api-key',
+)
+
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 
-export { app, auth }
+export { app, auth, hasFirebaseConfig }
