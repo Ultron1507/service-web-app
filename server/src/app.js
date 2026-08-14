@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 
 const errorMiddleware = require('./middleware/errorMiddleware');
+const authRoutes = require('./routes/authRoutes');
 
 dotenv.config();
 
@@ -24,6 +25,9 @@ app.get('/api/health', (req, res) => {
     message: 'Server is running',
   });
 });
+
+// Auth routes
+app.use('/api/auth', authRoutes);
 
 app.use(errorMiddleware);
 
