@@ -1,18 +1,13 @@
 const express = require('express');
-const { sendOtp, verifyOtp } = require('../controllers/authController');
+const { login } = require('../controllers/authController');
 
 const router = express.Router();
 
 /**
- * POST /api/auth/send-otp
- * Send OTP to admin phone number
+ * POST /api/auth/login
+ * Login with phone number
+ * Body: { phone: "XXXXXXXXXX" }
  */
-router.post('/send-otp', sendOtp);
-
-/**
- * POST /api/auth/verify-otp
- * Verify OTP and return JWT token
- */
-router.post('/verify-otp', verifyOtp);
+router.post('/login', login);
 
 module.exports = router;
