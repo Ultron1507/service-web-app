@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import More from './pages/More'
 import ServiceCategory from './pages/ServiceCategory'
 import AdminApp from './pages/AdminApp'
+import { useAuth } from './context/AuthContextValue'
 import './App.css'
 
 function AppLayout() {
@@ -35,9 +36,13 @@ function AppLayout() {
 
 function AppEntry() {
   const location = useLocation()
-  return location.pathname.startsWith('/admin') ? <AdminApp /> : <AuthProvider><AppLayout /></AuthProvider>
+  const { user } = useAuth()
+  if (location.pathname.startsWith('/admin')) {
+    return user?.role === 'admin' ? <AdminApp /> : <Navigate to="/" replace />
+  }
+  return <AppLayout />
 }
 
 export default function App() {
-  return <BrowserRouter><AppEntry /></BrowserRouter>
+  return <BrowserRouter><AuthProvider><AppEntry /></AuthProvider></BrowserRouter>
 }

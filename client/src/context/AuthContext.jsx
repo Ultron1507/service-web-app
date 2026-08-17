@@ -1,47 +1,62 @@
-import { useMemo, useRef, useState } from 'react'
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-import { auth, hasFirebaseConfig } from '../firebase/firebaseConfig'
+import { useMemo, useState } from 'react'
+import api, { login as requestLogin } from '../services/api'
 import { AuthContext } from './AuthContextValue'
 
+const TOKEN_KEY = 'authToken'
+const USER_KEY = 'authUser'
+const storedToken = localStorage.getItem(TOKEN_KEY)
+
+if (storedToken) api.defaults.headers.common.Authorization = `Bearer ${storedToken}`
+
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem(USER_KEY)
+    try {
+      return storedUser ? JSON.parse(storedUser) : null
+    } catch {
+      localStorage.removeItem(USER_KEY)
+      return null
+    }
+  })
+  const [token, setToken] = useState(storedToken)
   const [loading, setLoading] = useState(false)
-  const [otpSent, setOtpSent] = useState(false)
   const [error, setError] = useState('')
-  const confirmation = useRef(null)
-  const verifier = useRef(null)
 
   const login = async (phone) => {
-    setLoading(true); setError('')
-    if (!hasFirebaseConfig) {
-      setError('Firebase login is not configured for this environment.')
+    setLoading(true)
+    setError('')
+    try {
+      const digits = phone.replace(/\D/g, '')
+      const formattedPhone = digits.startsWith('91') && digits.length === 12 ? `+${digits}` : `+91${digits}`
+      const response = await requestLogin(formattedPhone)
+      if (!response.success || !response.data?.token || !response.data?.user) {
+        setError(response.message || 'Login failed')
+        return false
+      }
+
+      const { token: authToken, user: userData } = response.data
+      localStorage.setItem(TOKEN_KEY, authToken)
+      localStorage.setItem(USER_KEY, JSON.stringify(userData))
+      api.defaults.headers.common.Authorization = `Bearer ${authToken}`
+      setToken(authToken)
+      setUser(userData)
+      return true
+    } catch (requestError) {
+      setError(requestError.response?.data?.message || (requestError.request ? 'Unable to connect to server. Please try again.' : 'An error occurred. Please try again.'))
+      return false
+    } finally {
       setLoading(false)
-      return false
     }
-    try {
-      if (!verifier.current) verifier.current = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' })
-      confirmation.current = await signInWithPhoneNumber(auth, `+91${phone.replace(/\D/g, '')}`, verifier.current)
-      setOtpSent(true)
-      return true
-    } catch {
-      setError('Unable to send OTP. Check your Firebase configuration and try again.')
-      verifier.current?.clear(); verifier.current = null
-      return false
-    } finally { setLoading(false) }
   }
 
-  const verifyOtp = async (code) => {
-    setLoading(true); setError('')
-    try {
-      if (!confirmation.current) throw new Error('Request an OTP first')
-      const result = await confirmation.current.confirm(code)
-      setUser(result.user)
-      return true
-    } catch { setError('That code could not be verified. Please try again.'); return false } finally { setLoading(false) }
+  const logout = () => {
+    setUser(null)
+    setToken(null)
+    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem(USER_KEY)
+    delete api.defaults.headers.common.Authorization
   }
 
-  const logout = () => { setUser(null); setOtpSent(false); confirmation.current = null }
-  const value = useMemo(() => ({ user, loading, otpSent, error, login, verifyOtp, logout }), [user, loading, otpSent, error])
+  const value = useMemo(() => ({ user, token, loading, error, login, logout }), [user, token, loading, error])
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
-
