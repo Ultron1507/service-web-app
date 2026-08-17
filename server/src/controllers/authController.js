@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const mongoose = require('mongoose');
 const { normalizePhoneNumber, isValidPhoneNumber } = require('../utils/phone');
 const { generateToken } = require('../utils/jwt');
 
@@ -32,6 +33,14 @@ const isAdminPhone = (phone) => {
  */
 const login = async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      console.error('Login unavailable: MongoDB is not connected');
+      return res.status(503).json({
+        success: false,
+        message: 'Service is temporarily unavailable. Please try again.',
+      });
+    }
+
     const { phone } = req.body;
 
     // Validate phone number is provided
@@ -99,7 +108,11 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('Login error:', {
+      name: error.name,
+      code: error.code,
+      message: error.message,
+    });
     return res.status(500).json({
       success: false,
       message: 'Login failed. Please try again',
