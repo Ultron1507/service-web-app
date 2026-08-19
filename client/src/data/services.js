@@ -34,7 +34,7 @@ export const serviceCategories = {
   renting: {
     name: 'Renting', icon: 'ri-home-wifi-line',
     services: [
-      { id: 'ac-yearly-rent-installation', serviceName: 'AC Renting and Installation', price: '15000', icon: 'ri-home-wifi-line', description: 'Rent and install an AC for 1 year, as per Terms & Conditions', variant: 'rental' },
+      { id: 'ac-yearly-rent-installation', serviceName: 'AC Renting and Installation', icon: 'ri-home-wifi-line', description: 'Rent and install an AC for 1 year, as per Terms & Conditions', variant: 'rental' },
     ],
   },
 }

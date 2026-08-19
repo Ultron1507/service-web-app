@@ -1,0 +1,13 @@
+const router = require('express').Router();
+const { protect, adminOnly } = require('../middleware/authMiddleware');
+const booking = require('../controllers/bookingController');
+const admin = require('../controllers/adminController');
+router.use(protect, adminOnly);
+router.get('/dashboard', admin.dashboard);
+router.get('/bookings', booking.adminBookings);
+router.get('/bookings/:id', booking.adminBooking);
+router.patch('/bookings/:id/confirm', booking.confirm);
+router.patch('/bookings/:id/cancel', booking.cancel);
+router.patch('/bookings/:id/start', booking.start);
+router.patch('/bookings/:id/complete', booking.complete);
+module.exports = router;

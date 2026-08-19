@@ -3,6 +3,8 @@ import { AuthProvider } from './context/AuthContext'
 import BottomTabBar from './components/common/BottomTabBar'
 import Navbar from './components/common/Navbar'
 import BookingConfirm from './pages/BookingConfirm'
+import MyBookings from './pages/MyBookings'
+import BookingDetails from './pages/BookingDetails'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import More from './pages/More'
@@ -25,6 +27,8 @@ function AppLayout() {
           <Route path="/home" element={<Home />} />
           <Route path="/services/:category" element={<ServiceCategory />} />
           <Route path="/booking-confirm/:serviceId" element={<BookingConfirm />} />
+          <Route path="/my-bookings" element={<MyBookings />} />
+          <Route path="/bookings/:bookingId" element={<BookingDetails />} />
           <Route path="/more" element={<More />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
