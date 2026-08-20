@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { getMyBookings } from '../services/api'
 
 const formatDate = (value) => value ? new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium' }).format(new Date(value)) : 'Pending'
-const statusLabel = (status) => status?.replace('_', ' ') || 'Pending'
+const statusLabel = (status) => ({ pending: 'Booking Request Submitted', confirmed: 'Booking Confirmed', in_progress: 'In progress', completed: 'Completed', cancelled: 'Cancelled' }[status] || 'Pending')
 
 export default function MyBookings() {
   const navigate = useNavigate(); const [bookings, setBookings] = useState([]); const [loading, setLoading] = useState(true); const [error, setError] = useState('')
