@@ -6,6 +6,7 @@ router.use(protect, adminOnly);
 router.get('/dashboard', admin.dashboard);
 router.get('/bookings', booking.adminBookings);
 router.get('/bookings/:id', booking.adminBooking);
+router.patch('/bookings/:id/status', booking.updateStatus);
 router.patch('/bookings/:id/confirm', booking.confirm);
 router.patch('/bookings/:id/cancel', booking.cancel);
 router.patch('/bookings/:id/start', booking.start);

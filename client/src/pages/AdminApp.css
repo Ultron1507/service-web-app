@@ -41,6 +41,10 @@
 .review-summary strong { color: #d78c00; }
 .settings-fields input { border-color: #bfcfcd; border-radius: 11px; }
 .admin-modal-backdrop { background: rgba(6,91,145,.34); }
+.admin-badge.confirmed, .admin-badge.in-progress { color: var(--primary-active); background: var(--primary-soft); }
+.admin-status-field { display:grid; gap:7px; margin-top:20px; color:#63777b; font-size:11px; font-weight:700; }
+.admin-status-field select { width:100%; min-height:40px; padding:0 10px; border:1px solid var(--line); border-radius:9px; color:var(--ink); background:#fff; font:inherit; }
+.admin-status-help { margin:20px 0 0; color:var(--muted); font-size:12px; line-height:1.4; }
 .admin-table-scroll { max-width: 100%; overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; }
 .admin-table-panel { min-width: 0; }
 .review-rating { display: grid; gap: 6px; width: max-content; min-width: 220px; margin-bottom: 18px; padding: 18px 22px; }

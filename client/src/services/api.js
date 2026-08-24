@@ -29,6 +29,6 @@ export const getNotifications = async () => (await api.get('/api/notifications')
 export const markAllNotificationsRead = async () => (await api.patch('/api/notifications/read-all')).data
 export const markNotificationRead = async (id) => (await api.patch(`/api/notifications/${id}/read`)).data
 export const getAdminNotifications = getNotifications
-export const updateAdminBookingStatus = async (id, action, payload = {}) => (await api.patch(`/api/admin/bookings/${id}/${action}`, payload)).data
+export const updateAdminBookingStatus = async (id, status) => (await api.patch(`/api/admin/bookings/${id}/status`, { status })).data
 
 export default api
